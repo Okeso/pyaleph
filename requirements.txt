@@ -19,7 +19,7 @@ attrdict==2.0.1
 attrs==19.1.0
 autopep8==1.4.4
 Babel==2.8.0
-base58==1.0.3
+# base58==2.0.1
 bitarray==1.2.1
 bitcoin==1.1.42
 certifi==2019.6.16
@@ -65,7 +65,7 @@ jsonrpcclient==2.0.1
 jsonrpcserver==3.1.1
 jsonschema==3.2.0
 lazy-object-proxy==1.4.3
--e git+https://github.com/aleph-im/py-libp2p.git#egg=libp2p
+-e git+https://github.com/hoh/py-libp2p.git#egg=libp2p
 livereload==2.6.1
 logzero==1.5.0
 lru-dict==1.1.6
@@ -102,7 +102,7 @@ psutil==5.6.3
 ptyprocess==0.6.0
 py==1.8.1
 pyaes==1.6.1
-pycodestyle==2.5.0
+pycodestyle==2.6.0
 pycparser==2.20
 pycryptodome==3.9.0
 pyflakes==2.1.1
