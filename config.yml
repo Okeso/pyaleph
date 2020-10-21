@@ -1,0 +1,72 @@
+nuls2:
+    chain_id: 1
+    enabled: False
+    packing_node: False
+    sync_address: NULSd6HgUkssMi6oSjwEn3puNSijLKnyiRV7H
+    api_url: https://apiserver.nuls.io/
+    explorer_url: https://nuls.world/
+    token_contract: NULSd6Hh1FjbnAktH1FFvFnTzfgFnZtgAhYut
+
+ethereum:
+    enabled: True
+    api_url: https://mainnet.infura.io/v3/a4c0e018f146483495f219ab7b1b45ef
+    chain_id: 4
+    packing_node: False
+    sync_contract: "0x6aDF64fC26D495445A3CAB545aC808d66932aC15"
+    start_height: 5042280
+    token_contract: "0xc0134b5b924c2fca106efb33c45446c466fbe03e"
+
+binancechain:
+    enabled: False
+    packing_node: False
+
+mongodb:
+    uri: "mongodb://127.0.0.1"
+    database: alephtest
+
+storage:
+    store_files: true
+    engine: mongodb
+
+ipfs:
+    enabled: True
+    host: 127.0.0.1
+    port: 5001
+    gateway_port: 8080
+
+aleph:
+    queue_topic: ALEPH-TEST
+
+p2p:
+    host: 0.0.0.0
+    port: 4025
+    http_port: 4024
+    reconnect_delay: 60
+    key: |
+        -----BEGIN RSA PRIVATE KEY-----
+        MIIEowIBAAKCAQEAkyCAIx6o1A0hMDt3GqBtPIO4kFKlSotqXGmYX5ZxpSPhM6TA
+        jGDxqLAsLUCSSxsaQjsccD50L3/WNegvAokPfwQAqUoJY3Kvppab3KfNqd1cem5F
+        sDcrEB7MC6CCft8oKRkoFSdc9or+SMB4FsLMxCQzhRftVCgtZRDWAzGT2Ly/3juF
+        dQ3HpH/0K91zTfsZeHN3qXM22UUDvIdqRTDseFnd1O/WyiXKCHxdgdcqMz/wTOll
+        ZDIWktSMUY2krooQsllaVTOTK4KWkDCkbvUuDywQJ49Qmy6xsEXHaqAjHJEpgqKI
+        lBybpKBO/M6e2V46AQg9hWQNWfng0TH6gOpZlQIDAQABAoIBAB2DFXD2A3OVtqSQ
+        KRIEQCU1Xt5EVbegQ5OJ8vCpot43VkMftyfxgkgOHq5tF2tNYnUKmmfBf1jP0c46
+        ZsOhbqRRzzgmC8ARDz7hUx5t4olCR/yfBgeU6WRwaQmkBskgRlQIIcwsey9RLjS1
+        tuEJ7j0h7duysv6AmKp/OA6n8To2RIJMN7/MjgnhQh6YqPZVAlj9jzRqTJMECfZk
+        4GACHolhLdf9HAFcw+OGqPBeUt/t6TpMlZwddqXtrcb7rQwx3nSuJm9ONJ8kOJZa
+        m5kt//yPpf0FQ/HnAdQUaz/cGA6RwRZIUKLOPVslNb2m3vMWmt/kPn3F3CNGijGu
+        6w7aKwECgYEAwS4Gc5srxZU2mlq88HtF1j5JXG6ivMABcQCzGfJpscHVCYCpuZzB
+        kyB7R/GzetUCVx1ybzhgvtcAy2aBLMd116WCYFHxgYcWDpdERsw5yPU3No0zt4yG
+        VkrzzpJYz8ZxVR7/g8XvUJA0XWv+q4PNcGs7uTGBTmtl/TeJJNOXJmECgYEAwvii
+        jKa9PrsioyhGkjAaoQMYTb6pCwja8SIgmKuHgEhNxe9X1ccj2W1jQtav6ONixTsJ
+        Ids3DtYcM3zqqV49VqOrpUYyJBO3+ieFFCV8URJUdGezt3PI9giy7LoRgIqNC1fO
+        +OeXp6tUwLWHEY7dl5E4ZKnL4rPLDHOWICYJl7UCgYBgFNg4n7EBsNlbpE3c/jMa
+        ABjU1GI0pvsQjVyHRz6ynsmq1EeWfhT5bGpkuh6etVtYoNjN4KidwqougGk3MG24
+        OCXEan1IAzxBPZND80e6X9x6UXirjkUynkztLXTmwriTsbs8ezIwS8j/vjsIa6G+
+        jFdEIQ9DRb+QVhLsMiE3gQKBgQC3VIPELaUVL3HKaTyyiXkAnaBkujrJnXIB+00b
+        QW8QOOyoif3VjoMvF6SWXLjcC7P8MR7NLwv+b2XlJDijOXID3bKwnejX85KzLiX8
+        Y6MZuFqhekGK5ty4PEXCQtPiQmWNnOuJMHtxtbDj4801vViwBGU6gk6sxNLQyn8H
+        i7zJYQKBgG+IrdyGa0GmZzXiCRjjySVcujKz2KqOGREEkBWgP0d6TAr3bWWDWXus
+        hklMNiQuz6ZSnmb9g7OEK+xzXPmoMnQP+xBs7tM34yYjO9UcXydof825CdBswg+e
+        dWx4OYcjW0O3LeiSNFgBNcEZfogwEWJN6o4JoLTANq6QAumXFOiV
+        -----END RSA PRIVATE KEY-----

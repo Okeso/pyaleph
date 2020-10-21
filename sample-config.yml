@@ -10,7 +10,7 @@ nuls2:
 
 ethereum:
   enabled: True
-  api_url: http://127.0.0.1:8545
+  api_url: http://10.111.100.214:8545  # Remplacer par l'adresse rinkeby depuis infura
   chain_id: 4
   packing_node: False
   private_key: YOUR_PRIVATE_KEY_HERE
@@ -43,7 +43,7 @@ aleph:
 
 p2p:
   host: 0.0.0.0
-  port: 4025
-  http_port: 4024
+  port: 4025  # faire une ouverture de ports
+  http_port: 4024  # faire une ouverture de ports
   key: null
   reconnect_delay: 60

@@ -106,8 +106,11 @@ EXPOSE 4001
 EXPOSE 5001
 # IPFS Gateway
 EXPOSE 8080
-# PyAleph
+# PyAleph API
 EXPOSE 8081
+# PyAleph network
+EXPOSE 4024
+EXPOSE 4025
 
 RUN mkdir /opt/pyaleph/data
 
@@ -121,4 +124,6 @@ RUN ipfs init
 COPY deployment/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 USER root
 RUN chown mongodb:mongodb /run/mongodb
-CMD ["/usr/bin/supervisord", "--nodaemon", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+#CMD /usr/bin/supervisord --nodaemon -c /etc/supervisor/conf.d/supervisord.conf
+#CMD ["/usr/bin/supervisord", "--nodaemon", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/supervisord.conf"]
