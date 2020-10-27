@@ -75,30 +75,26 @@ RUN pip install --use-feature=2020-resolver pipdeptree
 
 # Install custom dependencies
 #RUN pip install --use-feature=2020-resolver git+https://github.com/aleph-im/py-libp2p.git
-RUN pip install --use-feature=2020-resolver git+https://github.com/aleph-im/nuls2-python.git
-RUN pip install --use-feature=2020-resolver git+https://github.com/aleph-im/aleph-client.git
+#RUN pip install --use-feature=2020-resolver git+https://github.com/aleph-im/nuls2-python.git
+#RUN pip install --use-feature=2020-resolver git+https://github.com/aleph-im/aleph-client.git
 
 # Install patched version of py-libp2p
-COPY ../../py-libp2p /opt/py-libp2p
-RUN pip install --use-feature=2020-resolver /opt/py-libp2p/
+#COPY ../../py-libp2p /opt/py-libp2p
+#RUN pip install --use-feature=2020-resolver /opt/py-libp2p/
 
 # Install patched version of py-substrate-interface
+# A commit on master fixes the status, but not published yet on Pypi as of 2020-10-27
+# See https://github.com/polkascan/py-substrate-interface/pull/40
 COPY ../../py-substrate-interface /opt/py-substrate-interface
 # ENV variable used to detect the package version
-ENV TRAVIS_TAG 0.9.21
+ENV TRAVIS_TAG 0.9.26
 RUN pip install --use-feature=2020-resolver /opt/py-substrate-interface/
 ENV TRAVIS_TAG ""
 
-RUN pip install --use-feature=2020-resolver iniconfig==1.0.1
+#RUN pip install --use-feature=2020-resolver iniconfig==1.0.1
 # Install patched version of two1-python
 COPY ../../two1-python /opt/two1-python
 RUN pip install --use-feature=2020-resolver /opt/two1-python
-
-# Install patched version of neo-python
-COPY ../../neo-python /opt/neo-python
-RUN pip install --use-feature=2020-resolver /opt/neo-python
-RUN pip install --use-feature=2020-resolver python-binance-chain==0.1.20
-
 
 # === Copy source code, excluding 3rd-party libs ===
 COPY ../../setup.py /opt/pyaleph/
@@ -120,7 +116,8 @@ RUN chown -R source:source /opt/pyaleph/src
 USER source
 WORKDIR /opt/pyaleph
 RUN python setup.py develop
-# RUN python setup.py testing
+RUN /opt/venv/bin/pip install --use-feature=2020-resolver -e ".[testing]"
+RUN /opt/venv/bin/pip install --use-feature=2020-resolver -e ".[nuls2]"
 
 # TODO: Check if this is useful
 RUN mkdir /opt/pyaleph/data
