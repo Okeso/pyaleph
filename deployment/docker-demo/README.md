@@ -56,3 +56,6 @@ and for MongoDB in `/var/log/mongodb/`.
 
 The command `supervisorctl` can be used to start/stop processes.
 See [supervisord.org](http://supervisord.org/).
+
+The file [supervisord.conf](supervisord.conf) describes how the services
+are launched. 

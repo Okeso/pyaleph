@@ -55,12 +55,10 @@ RUN mkdir /opt/venv /opt/pyaleph
 RUN chown source:source /opt/venv /opt/pyaleph
 RUN chown -R source:source /var/lib/ipfs
 USER source
-
+# ENV is user-specific
+ENV IPFS_PATH /var/lib/ipfs
 
 # === Install Python environment and dependencies ===
-#
-# Note: Most of the complexity in this section is due to conflicts in dependencies.
-# These should ideally be fixed upstream.
 
 # Create virtualenv
 RUN virtualenv -p python3 /opt/venv
@@ -70,42 +68,19 @@ ENV PIP_NO_CACHE_DIR yes
 RUN /opt/venv/bin/python3 -m pip install --upgrade pip
 ENV PATH="/opt/venv/bin:${PATH}"
 
-# Optional: Install pipdeptree to debug Python dependencies
-RUN pip install --use-feature=2020-resolver pipdeptree
-
-# Install custom dependencies
-#RUN pip install --use-feature=2020-resolver git+https://github.com/aleph-im/py-libp2p.git
-#RUN pip install --use-feature=2020-resolver git+https://github.com/aleph-im/nuls2-python.git
-#RUN pip install --use-feature=2020-resolver git+https://github.com/aleph-im/aleph-client.git
-
-# Install patched version of py-libp2p
-#COPY ../../py-libp2p /opt/py-libp2p
-#RUN pip install --use-feature=2020-resolver /opt/py-libp2p/
-
-# Install patched version of py-substrate-interface
-# A commit on master fixes the status, but not published yet on Pypi as of 2020-10-27
-# See https://github.com/polkascan/py-substrate-interface/pull/40
-COPY ../../py-substrate-interface /opt/py-substrate-interface
-# ENV variable used to detect the package version
-ENV TRAVIS_TAG 0.9.26
-RUN pip install --use-feature=2020-resolver /opt/py-substrate-interface/
-ENV TRAVIS_TAG ""
-
-#RUN pip install --use-feature=2020-resolver iniconfig==1.0.1
-# Install patched version of two1-python
-COPY ../../two1-python /opt/two1-python
-RUN pip install --use-feature=2020-resolver /opt/two1-python
-
-# === Copy source code, excluding 3rd-party libs ===
+# === Copy source code ===
 COPY ../../setup.py /opt/pyaleph/
 COPY ../../setup.cfg /opt/pyaleph/
-COPY ../../config.yml /opt/pyaleph/config.yml
-COPY ../../tests /opt/pyaleph/tests
 COPY ../../src /opt/pyaleph/src
+
+COPY ../../tests /opt/pyaleph/tests
+
 COPY .git /opt/pyaleph/.git
 
+COPY ../../config.yml /opt/pyaleph/config.yml
 
-# === Install source code ===
+
+# === Install the application and dependencies ===
 
 # Setup directories for `python setup.py develop`
 USER root
@@ -116,16 +91,13 @@ RUN chown -R source:source /opt/pyaleph/src
 USER source
 WORKDIR /opt/pyaleph
 RUN python setup.py develop
-RUN /opt/venv/bin/pip install --use-feature=2020-resolver -e ".[testing]"
-RUN /opt/venv/bin/pip install --use-feature=2020-resolver -e ".[nuls2]"
+RUN /opt/venv/bin/pip install --use-feature=2020-resolver -e ".[nuls2,testing]"
 
-# TODO: Check if this is useful
-RUN mkdir /opt/pyaleph/data
 
-ENV IPFS_PATH /var/lib/ipfs
-
+# === Run PyAleph,MongoDB and IPFS using supervisord ===
 USER root
 COPY deployment/docker-demo/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+# Entrypoint script used to initialize IPFS and launch supervisord
 COPY deployment/docker-demo/entrypoint.sh /entrypoint.sh
 CMD ["/entrypoint.sh"]
 
