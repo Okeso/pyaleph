@@ -14,5 +14,6 @@ podman run --name pyaleph \
   --mount type=tmpfs,destination=/var/log \
   -v pyaleph-mongodb:/var/lib/mongodb \
   -v pyaleph-ipfs:/var/lib/ipfs \
+  -v "$(pwd)/config.yml:/opt/pyaleph/config.yml" \
   --rm -ti \
-  aleph.im/pyaleph-demo
+  aleph.im/pyaleph-demo "$@"

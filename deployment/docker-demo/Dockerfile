@@ -11,7 +11,8 @@ RUN apt-get update && apt-get -y upgrade && apt-get install -y \
      python3-pip \
      python3-virtualenv \
      virtualenv \
-     build-essential
+     build-essential \
+     git
 
 # Install system dependencies
 RUN apt-get install -y \
@@ -23,7 +24,6 @@ RUN apt-get install -y \
      librocksdb-dev \
      libgmp-dev \
      libsecp256k1-dev \
-     git \
      pkg-config \
      libssl-dev \
      libleveldb-dev \
@@ -44,21 +44,32 @@ RUN tar -xvzf go-ipfs_v0.7.0_linux-amd64.tar.gz -C /opt/
 RUN ln -s /opt/go-ipfs/ipfs /usr/local/bin/
 RUN /opt/go-ipfs/ipfs init
 RUN mkdir /var/lib/ipfs
+# - User 'ipfs' to run IPFS -
+RUN useradd -s /bin/bash ipfs
+RUN chown -R ipfs:ipfs /var/lib/ipfs
 
 # Install Supervisord
 RUN apt-get install -y supervisor
 
 
 # ===  Create an unprivileged user to install Python dependencies ===
+
+# - User 'source' to install code and dependencies -
 RUN useradd -s /bin/bash source
-RUN mkdir /opt/venv /opt/pyaleph
-RUN chown source:source /opt/venv /opt/pyaleph
-RUN chown -R source:source /var/lib/ipfs
-USER source
+RUN mkdir /opt/venv
+RUN chown source:source /opt/venv
+
+# - User 'aleph' to run the code itself
+RUN useradd -s /bin/bash aleph
+RUN mkdir /opt/pyaleph
+RUN chown aleph:aleph /opt/pyaleph
+USER aleph
 # ENV is user-specific
 ENV IPFS_PATH /var/lib/ipfs
 
+
 # === Install Python environment and dependencies ===
+USER source
 
 # Create virtualenv
 RUN virtualenv -p python3 /opt/venv
@@ -77,15 +88,14 @@ COPY ../../tests /opt/pyaleph/tests
 
 COPY .git /opt/pyaleph/.git
 
-COPY ../../config.yml /opt/pyaleph/config.yml
-
 
 # === Install the application and dependencies ===
 
 # Setup directories for `python setup.py develop`
 USER root
 RUN mkdir /opt/pyaleph/src/pyaleph.egg-info
-RUN chown -R source:source /opt/pyaleph/src
+RUN mkdir /opt/pyaleph/.eggs
+RUN chown -R source:source /opt/pyaleph/src /opt/pyaleph/.eggs
 
 # Install PyAleph source
 USER source
