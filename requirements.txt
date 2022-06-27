@@ -150,7 +150,7 @@ two1==3.10.9
 typed-ast==1.4.1
 typing-extensions==3.7.4.1
 u-msgpack-python==2.5.2
-ujson==2.0.3
+ujson==5.2.0
 urllib3==1.25.3
 uvloop==0.14.0
 varint==1.0.2
